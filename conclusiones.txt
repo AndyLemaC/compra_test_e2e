@@ -1,0 +1,46 @@
+Hallazgos y Conclusiones
+
+Hallazgos:
+
+1. Estructura de Proyecto Screenplay:
+   - Se utilizan constructores privados en clases de UI para evitar instanciación innecesaria, lo que demuestra un enfoque orientado a la calidad del código.
+   - El proyecto implementa correctamente el patrón Screenplay con Serenity BDD, organizando adecuadamente el código en tasks, questions, pages y step definitions.
+
+2. Configuración de WebDriver
+   - Se identificó un problema con la configuración del HTTP Client factory (`webdriver.http.factory=jdk-http-client`), que causaba errores al iniciar el navegador. Este problema fue resuelto eliminando esta configuración.
+
+3. Manejo de Objetivos/Targets:
+   - Se encontró un error en la forma de acceder a elementos web en la clase , donde se intentaba utilizar `getCssOrXPathSelector()` en un Target de tipo By, lo cual no es compatible. `CartItems`
+   - Se requirió modificar la implementación para acceder directamente al Target o cambiar la definición del Target utilizando `locatedBy()` en lugar de `located(By)`.
+
+4. Proceso de Compra E2E:
+   - El flujo de compra implementado es completo, abarcando desde la selección de productos hasta la confirmación de la orden.
+   - La implementación utiliza correctamente Tasks específicas para cada paso del proceso (ViewCart, CompleteCheckout), lo que mejora la legibilidad y mantenibilidad.
+
+5. Manejo de Esperas:
+   - El proyecto utiliza correctamente las esperas explícitas de Serenity BDD con `WaitUntil.the(..., isVisible())` en lugar de esperas fijas, lo que mejora la robustez de las pruebas.
+   - Los tiempos de espera están configurados adecuadamente en el archivo . `serenity.properties`
+
+Conclusiones
+
+1. Implementación del Patrón Screenplay:
+   - La arquitectura del proyecto sigue correctamente el patrón Screenplay, lo que facilita la creación de pruebas mantenibles, legibles y escalables.
+   - La separación clara entre las responsabilidades (UI, Tasks, Questions) permite un código más modular y fácil de mantener.
+
+2. Configuración de WebDriver:
+   - Es recomendable centralizar la configuración del WebDriver en un solo lugar, preferiblemente en el archivo o en una clase de configuración específica, para evitar problemas de inconsistencia. `serenity.properties`
+   - La implementación actual tiene configuración duplicada en múltiples archivos, lo que podría llevar a comportamientos inesperados.
+
+3. Manejo de Elementos Web:
+   - Es importante comprender las diferencias entre los métodos `located()` y `locatedBy()` al definir Targets en Serenity Screenplay, ya que afectan a cómo se pueden acceder a estos elementos posteriormente.
+   - El uso de `findAll(Target)` directamente es preferible al uso de `findAll(Target.getCssOrXPathSelector())` para evitar problemas de compatibilidad.
+
+4. Robustez de las Pruebas:
+   - Las pruebas implementan correctamente esperas explícitas, lo que las hace más robustas frente a variaciones en la velocidad de carga de la página.
+
+Recomendaciones:
+    - Centralizar la configuración del WebDriver para reducir la duplicación y posibles inconsistencias.
+    - Revisar todas las instancias donde se utilizan Targets para asegurar que se accede a ellos de manera correcta.
+    - Considerar la implementación de un mecanismo de recovery para casos donde las pruebas puedan fallar por razones externas.
+
+
