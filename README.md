@@ -18,7 +18,7 @@ Este proyecto implementa pruebas automatizadas de extremo a extremo (E2E) sobre 
 ### 1️⃣ Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/compra_test_e2e.git
+git clone https://github.com/AndyLemaC/compra_test_e2e.git
 cd compra_test_e2e
 ```
 
